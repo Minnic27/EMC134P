@@ -20,12 +20,18 @@ public class BlinkTextUI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() {
+        if (isTrue == false) {
+            BlinkUI();
+            isTrue = true;
+        }
+    }
+
+    void BlinkUI()
     {
         blink = spaceship.GetComponent<PhysicsMovement>().netForceCheck;
         if (blink) {
             StartCoroutine(BlinkSuccess());
-            blink = false;
         } else {
             StartCoroutine(BlinkFail());
         }
@@ -38,10 +44,9 @@ public class BlinkTextUI : MonoBehaviour
 
             textUI.text = " ";
             yield return new WaitForSeconds(1f);
-            textUI = GetComponent<Text>();
             textUI.color = Color.green;
             textUI.text = "Success!";
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -51,10 +56,9 @@ public class BlinkTextUI : MonoBehaviour
 
             textUI.text = " ";
             yield return new WaitForSeconds(1f);
-            textUI = GetComponent<Text>();
             textUI.color = Color.red;
             textUI.text = "Unbalanced Force Detected";
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
     }
 }
